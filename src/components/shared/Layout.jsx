@@ -7,7 +7,7 @@ export default function Layout() {
         <div className="flex flex-row bg-neutral-100 h-screen w-screen overflow-hidden">
             <Sidebar/>     
                    
-            <div className="flex-1">
+            <div className="flex-1 overflow-auto">
                 <Header/>
                 <div>{<Outlet/>}</div>
             </div>
