@@ -5,17 +5,19 @@ import { Fragment } from 'react'
 import { Transition } from '@headlessui/react'
 import classNames from 'classnames'
 import { useNavigate } from 'react-router-dom'
-
+import Clock from '../components/Clock'
+import { BiSolidUser } from 'react-icons/bi'
 export default function Header() {
 
     const navigate = useNavigate()
 
   return (
-    <div className='bg-white h-16 px-4 flex justify-between items-center border-b border-gray-200'>
-        <div className='relative'>
-            <HiOutlineSearch fontSize={20} className='text-gray-400 absolute top-1/2 -translate-y-1/2  left-3' />
-            <input type='text' placeholder='Search...' className='text-sm focus:outline-none active:outline-none h-10 w-{24rem} border border-gray-300 rounded-sm pl-11 pr-4'/>
-        </div>
+    <div className='bg-komatsu-gray h-16 px-4 flex justify-between items-center border-b border-gray-200'>
+
+      <div> 
+        <Clock/>
+      </div>
+        
         <div className='flex items-center gap-2 mr-2'>
         <Popover className="relative">
         {({ open }) => (
@@ -87,8 +89,9 @@ export default function Header() {
         <div>
           <Menu.Button className="ml-2 inline-flex rounded-full focus:outline-none focus:ring-2 focus:ring-neutral-400">
             <span className='sr-only'>Open user menu</span>
-            <div className='h-10 w-10 rounded-full bg-sky-500 bg-cover bg-no-repeat bg-center' style={{backgroundImage: 'url("https://source.unsplash.com/80x80?face")'}}>
-                <span className='sr-only'> Del Piero</span>
+            <div className='h-10 w-10 rounded-full bg-white flex items-center justify-center'>
+              <BiSolidUser fontSize={30} />
+              <span className='sr-only'> User </span>
             </div>
           </Menu.Button>
         </div> 

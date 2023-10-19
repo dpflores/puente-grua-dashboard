@@ -112,7 +112,7 @@ const heatChartOptions = {
 export default function HeatMapChart() {
   return (
     <div className="bg-white p-4 rounded-sm border border-gray-200 flex flex-col flex-1">
-        <strong className="text-gray-700 font-medium">Campana de Gauss</strong>
+        <strong className="text-gray-700 font-medium">Mapa de calor</strong>
         <div className="mt-3 flex flex-1 text-xs ">
 
             <ResponsiveContainer>
