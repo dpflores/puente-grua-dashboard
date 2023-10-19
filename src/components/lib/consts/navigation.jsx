@@ -9,43 +9,35 @@ import {
 	HiOutlineCog
 } from 'react-icons/hi'
 
+import { MdCalendarMonth } from 'react-icons/md'
+
+import { AiOutlineLineChart } from 'react-icons/ai'
+
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
-		key: 'dashboard',
-		label: 'Dashboard',
+		key: 'sistema',
+		label: 'Estatus de Sistema',
 		path: '/',
 		icon: <HiOutlineViewGrid />
 	},
 	{
-		key: 'products',
-		label: 'Products',
-		path: '/products',
-		icon: <HiOutlineCube />
+		key: 'mensual1',
+		label: 'Estatus Mensual 1',
+		path: '/mensual1',
+		icon: <MdCalendarMonth/>
 	},
 	{
-		key: 'orders',
-		label: 'Orders',
-		path: '/orders',
-		icon: <HiOutlineShoppingCart />
+		key: 'mensual2',
+		label: 'Estatus Mensual 2',
+		path: '/mensual2',
+		icon: <MdCalendarMonth/>
 	},
 	{
-		key: 'customers',
-		label: 'Customers',
-		path: '/customers',
-		icon: <HiOutlineUsers />
+		key: 'operation',
+		label: 'Estatus de Operación',
+		path: '/operation',
+		icon: <AiOutlineLineChart />
 	},
-	{
-		key: 'transactions',
-		label: 'Transactions',
-		path: '/transactions',
-		icon: <HiOutlineDocumentText />
-	},
-	{
-		key: 'messages',
-		label: 'Messages',
-		path: '/messages',
-		icon: <HiOutlineAnnotation />
-	}
 ]
 
 export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
