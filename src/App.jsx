@@ -6,6 +6,7 @@ import EstatusSistema from "./components/EstatusSistema";
 import EstatusOperacion from "./components/EstatusOperacion";
 import EstatusMensual1 from "./components/EstatusMensual1";
 import EstatusMensual2 from "./components/EstatusMensual2";
+import LoginView from "./components/Login";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route path="operation" element={<EstatusOperacion />} />
         </Route>
 
-        <Route path="login" element={<h1>Login</h1>} />
+        <Route path="login" element={<LoginView/>} />
 
       </Routes>
     </Router>

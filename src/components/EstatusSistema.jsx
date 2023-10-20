@@ -4,8 +4,8 @@ import RealTimeChart from "./charts/RealTimeChart";
 import RecentOrders from "./RecentOrders";
 import PopularProducts from "./PopularProducts";
 
-import DeviceDescription from "./components/DeviceDescription";
-import DeviceDraw from "./components/DeviceDraw";
+import DeviceDescription from "./utils/DeviceDescription";
+import DeviceDraw from "./utils/DeviceDraw";
 
 
 export default function EstatusSistema() {

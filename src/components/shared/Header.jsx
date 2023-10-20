@@ -5,7 +5,7 @@ import { Fragment } from 'react'
 import { Transition } from '@headlessui/react'
 import classNames from 'classnames'
 import { useNavigate } from 'react-router-dom'
-import Clock from '../components/Clock'
+import Clock from '../utils/Clock'
 import { BiSolidUser } from 'react-icons/bi'
 export default function Header() {
 

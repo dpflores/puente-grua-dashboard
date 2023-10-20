@@ -29,10 +29,10 @@ export default function Sidebar() {
             <SidebarLink key={item.key} item={item}/>
         ))}
 
-            <div className={classNames('text-red-500 cursor-pointer', linkClasses) }>
+            <Link to={'/login'} className={classNames('text-red-500 cursor-pointer', linkClasses) }>
             <span className='text-xl'><HiOutlineLogout/></span>
             Logout
-            </div>
+            </Link>
 
         </div>
     </div>
