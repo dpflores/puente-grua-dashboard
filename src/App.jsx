@@ -12,16 +12,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        
-        <Route path="/" element={<Layout />} >
+        <Route path="/" element={<Layout />}>
           <Route index element={<EstatusSistema />} />
           <Route path="mensual1" element={<EstatusMensual1 />} />
           <Route path="mensual2" element={<EstatusMensual2 />} />
           <Route path="operation" element={<EstatusOperacion />} />
         </Route>
 
-        <Route path="login" element={<LoginView/>} />
-
+        <Route path="login" element={<LoginView />} />
       </Routes>
     </Router>
   );
