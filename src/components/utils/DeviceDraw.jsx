@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { useState } from 'react';
-
+import { useEffect } from 'react';
 export default function DeviceDraw() {
   return (
     <div className='bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1'>
@@ -13,12 +13,21 @@ export default function DeviceDraw() {
   )
 }
 
+
 function Draw() {
+
+
 
   const [x_pos, setXPos] = useState(0);
   const [y_pos, setYPos] = useState(0);
-  var y_max=38;
+
+  const [carga1, setCarga1] = useState(0);
+  const [carga2, setCarga2] = useState(0);
+  
+
   var x_max=75;
+  var y_max=38;
+ 
 
   var x = 0;
   var y = 0;
@@ -32,6 +41,36 @@ function Draw() {
     setYPos(newPosition);
   };
 
+
+
+  useEffect(() => {
+    const fetchData = () => {
+      fetch('http://localhost:1880/status-draw')
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setXPos(data.rm9000.x_axis);
+          setYPos(data.rm9000.y_axis);
+          setCarga1(data.carga_grua.carga1);
+          setCarga2(data.carga_grua.carga2);
+          // setPosts(data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
+    // Ejecutar fetchData inicialmente
+    fetchData();
+
+    // Configurar un intervalo para ejecutar fetchData cada 500 milisegundos
+    const intervalId = setInterval(fetchData, 200);
+
+    // Limpieza cuando el componente se desmonta
+    return () => {clearInterval(intervalId);
+    }
+  }, []);
+
+
   return(
     <Fragment>
     <Line left={5} top={10} thickness={5} length={90} orientation={false}/>
@@ -43,8 +82,8 @@ function Draw() {
     <Line left={8.5+x_pos} top={15+y_pos} thickness={6} length={15} orientation={true}/>
     <Line left={8.5+x_pos} top={32+y_pos} thickness={6} length={10} orientation={true}/>
 
-    <TextBox value={0} units={"Tn."} size={1} length={8} height={5} left={15+x_pos} top={19+y_pos}/>
-    <TextBox value={0} units={"Tn."} size={1} length={8} height={5} left={15+x_pos} top={35+y_pos}/>
+    <TextBox value={carga1} units={"Tn."} size={1} length={8} height={5} left={15+x_pos} top={19+y_pos}/>
+    <TextBox value={carga2} units={"Tn."} size={1} length={8} height={5} left={15+x_pos} top={35+y_pos}/>
 
     <div style={{top:'105%', position:'absolute'}}>
       <input

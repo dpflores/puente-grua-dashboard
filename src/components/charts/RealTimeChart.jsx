@@ -98,9 +98,51 @@ var array3 = [];
 var array4 = [];
 
 const stockOptions = {
-  // chart:{
-  // 	height: (9/26 * 100) + '%'
-  // },
+  series: [
+    {
+      name: "Grúa 1",
+      color: "#66CC00",
+      // showCheckbox: true,
+      // data: array1,
+      data: [],
+
+      tooltip: {
+        pointFormat:
+          '<span style="color:{point.color}">\u25CF</span> ' +
+          "{series.name}: <b>{point.y}m</b><br/>",
+      },
+    },
+    {
+      name: "Grúa 2",
+      color: "#FF9933",
+      // showCheckbox: true,
+      data: [],
+
+      tooltip: {
+        pointFormat:
+          '<span style="color:{point.color}">\u25CF</span> ' +
+          "{series.name}: <b>{point.y}m</b><br/>",
+      },
+    },
+  ],
+  chart:{
+  	events: {
+      load: function () {
+
+          // set up the updating of the chart each second
+          console.log(this.series[0]);
+          var series1 = this.series[0];
+          // var series1 = this.series[1];
+          setInterval(function () {
+              console.log(series1.data)
+              var x = (new Date()).getTime(), // current time
+                  y = Math.round(Math.random() * 100);
+              series1.addPoint([x, y], true, true);
+              // series1.addPoint([x, y], true, true);
+          }, 1000);
+      }
+  }
+  },
 
   accessibility: {
     enabled: false,
@@ -180,32 +222,7 @@ const stockOptions = {
     useUTC: false,
     timezone: "America/Lima",
   },
-  series: [
-    {
-      name: "Grúa 1",
-      color: "#66CC00",
-      // showCheckbox: true,
-      data: array1,
-
-      tooltip: {
-        pointFormat:
-          '<span style="color:{point.color}">\u25CF</span> ' +
-          "{series.name}: <b>{point.y}m</b><br/>",
-      },
-    },
-    {
-      name: "Grúa 2",
-      color: "#FF9933",
-      // showCheckbox: true,
-      data: array2,
-
-      tooltip: {
-        pointFormat:
-          '<span style="color:{point.color}">\u25CF</span> ' +
-          "{series.name}: <b>{point.y}m</b><br/>",
-      },
-    },
-  ],
+  
 };
 
 export default function RealTimeChart() {

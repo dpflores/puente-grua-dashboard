@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function Description() {
   return (
@@ -32,7 +32,7 @@ export default function Description() {
 
             <div className='flex flex-row my-5'>
                 <div className='flex flex-1 mr-10'>Horómetro: </div>
-                <div className='flex flex-1'><Hourmeter/></div>
+                <div className='flex flex-1 text-komatsu-blue text-xl'><Hourmeter/></div>
            
             </div>
 
@@ -44,17 +44,21 @@ export default function Description() {
 
 
 export function Hourmeter() {
+    const [minutes, setMinutes] = useState(0);
+    const [hours, setHours] = useState(0);
+  
+    // Función para formatear los minutos y las horas con dos dígitos
+    const formatTime = (value) => value.toString().padStart(2, '0');
+  
     return (
-        <div class="flex flex-row">
-            <div class="hour">
-            <span id="hourDisplay">00</span>
-            </div>
-            <div class="separator">:</div>
-            <div class="minute">
-            <span id="minuteDisplay">00</span>
-            </div>
-      
+      <div className="flex flex-row">
+        <div className="hour">
+          <span id="hourDisplay">{formatTime(hours)}</span>
         </div>
-    )
-
-}
+        <div className="separator">:</div>
+        <div className="minute">
+          <span id="minuteDisplay">{formatTime(minutes)}</span>
+        </div>
+      </div>
+    );
+  }
