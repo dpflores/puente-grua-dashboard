@@ -2,9 +2,9 @@ import React, { Fragment } from "react";
 import Bell from "./highcharts/Bell";
 import Highcharts from "highcharts/highstock";
 import { ResponsiveContainer } from "recharts";
-import DatePickerComponent from "./highcharts/components/DatePicker";
+import DatePickerComponent from "./components/DatePicker";
 import { Button } from "antd";
-import RefreshButton from "./highcharts/components/RefreshButton";
+import RefreshButton from "./components/RefreshButton";
 
 require("highcharts/modules/histogram-bellcurve")(Highcharts);
 require("highcharts/indicators/indicators")(Highcharts);

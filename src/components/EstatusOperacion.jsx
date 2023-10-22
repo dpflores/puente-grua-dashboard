@@ -5,6 +5,7 @@ import BuyerProfileChart from "./BuyerProfileChart";
 import RecentOrders from "./RecentOrders";
 import PopularProducts from "./PopularProducts";
 import Box from "./shared/Box";
+import DownloadData from "./utils/DownloadData";
 
 export default function EstatusOperacion() {
   return (
@@ -20,8 +21,12 @@ export default function EstatusOperacion() {
       </div>
 
       <div className="flex flex-row gap-4 w-full">
-        <RecentOrders />
-        <PopularProducts />
+        <Box>
+          <DownloadData />
+        </Box>
+        
+        {/* <RecentOrders />
+        <PopularProducts /> */}
       </div>
     </div>
   );

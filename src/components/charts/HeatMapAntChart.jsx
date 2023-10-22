@@ -6,8 +6,8 @@ import { Heatmap } from "@ant-design/plots";
 
 import { useState } from "react";
 import { useEffect } from "react";
-import DatePickerComponent from "./highcharts/components/DatePicker";
-import RefreshButton from "./highcharts/components/RefreshButton";
+import DatePickerComponent from "./components/DatePicker";
+import RefreshButton from "./components/RefreshButton";
 const DemoHeatmap = () => {
   const [data, setData] = useState([]);
 
