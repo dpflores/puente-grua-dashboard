@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 const popularProducts = [
 	{
-		id: '3432',
+		id: '34121132',
 		product_name: 'Macbook M1 Pro 14"',
 		product_thumbnail: 'https://source.unsplash.com/100x100?macbook',
 		product_price: '$1499.00',
