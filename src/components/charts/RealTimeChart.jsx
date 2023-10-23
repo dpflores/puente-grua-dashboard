@@ -103,8 +103,8 @@ const stockOptions = {
       name: "Grúa 1",
       color: "#66CC00",
       // showCheckbox: true,
-      // data: array1,
-      data: [],
+      data: array1,
+      // data: [],
 
       tooltip: {
         pointFormat:
@@ -116,7 +116,8 @@ const stockOptions = {
       name: "Grúa 2",
       color: "#FF9933",
       // showCheckbox: true,
-      data: [],
+      data: array2,
+      // data: [],
 
       tooltip: {
         pointFormat:
@@ -125,23 +126,30 @@ const stockOptions = {
       },
     },
   ],
-  chart:{
-  	events: {
+  chart: {
+    events: {
       load: function () {
+        // set up the updating of the chart each second
+        var series1 = this.series[0];
+        var series2 = this.series[1];
 
-          // set up the updating of the chart each second
-          console.log(this.series[0]);
-          var series1 = this.series[0];
-          // var series1 = this.series[1];
-          setInterval(function () {
-              console.log(series1.data)
-              var x = (new Date()).getTime(), // current time
-                  y = Math.round(Math.random() * 100);
-              series1.addPoint([x, y], true, true);
-              // series1.addPoint([x, y], true, true);
-          }, 1000);
-      }
-  }
+        setInterval(function () {
+          if (!!series1.data) {
+            var x = new Date().getTime(), // current time
+              y = Math.round(Math.random() * 100);
+            series1.addPoint([x, y]);
+          }
+        }, 1000);
+
+        setInterval(function () {
+          if (!!series2.data) {
+            var x = new Date().getTime(), // current time
+              y = Math.round(Math.random() * 100);
+            series2.addPoint([x, y]);
+          }
+        }, 1000);
+      },
+    },
   },
 
   accessibility: {
@@ -222,7 +230,6 @@ const stockOptions = {
     useUTC: false,
     timezone: "America/Lima",
   },
-  
 };
 
 export default function RealTimeChart() {

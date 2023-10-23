@@ -3,6 +3,7 @@ import Plot from "react-plotly.js";
 import { useState } from "react";
 import { chart } from "highcharts";
 import { ResponsiveContainer } from "recharts";
+import { useEffect } from "react";
 
 var nombresMeses = [
   "Enero",
@@ -49,7 +50,7 @@ function generateTrace(hours, month, fInit, fEnd, state, sw) {
     },
     type: "bar",
     showlegend: sw,
-    text: ["<br><b>Inicio</b>:" + fInit + "<br><b>Fin</b>:" + fEnd],
+    text: ["<br><b>Inicio</b>: " + fInit + "<br><b>Fin</b>: " + fEnd],
     hovertemplate:
       "<b>" +
       state +
@@ -80,7 +81,7 @@ function convertISOToReadableDateTime(isoDate) {
 
 //Initialize chart
 const fecha = new Date();
-const mesActual = 9; //fecha.getMonth() + 1;
+const mesActual = 10; //fecha.getMonth() + 1;
 var mes_init = nombresMeses[mesActual];
 //traceInitM = generateTrace(0.0001, mes_init, '000/00/00 00:00', '0000/00/00 00:00', 'Mantenimiento',true)//'2022/11/24 10:50:16'
 var traceInitUE = generateTrace(
@@ -112,6 +113,46 @@ var data_init = [traceInitUE, traceInitUC, traceInitNU]; //,traceInitM];
 export default function FrenquencyChart() {
   const [data_chart, setData] = useState(data_init);
 
+  useEffect(() => {
+    const fetchData = () => {
+      fetch("http://localhost:1880/frequency")
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data);
+          var trace = [];
+          trace = [...data_init];
+          for (var i = 0; i < data.length; i++) {
+            console.log(data[i]);
+            var traceAdd = generateTrace(
+              data[i].hours,
+              data[i].month,
+              convertISOToReadableDateTime(data[i].fInit),
+              convertISOToReadableDateTime(data[i].fEnd),
+              data[i].state,
+              false
+            );
+            trace.push(traceAdd);
+          }
+
+          setData(trace);
+          // setPosts(data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
+    // Ejecutar fetchData inicialmente
+    fetchData();
+
+    // Configurar un intervalo para ejecutar fetchData cada 500 milisegundos
+    const intervalId = setInterval(fetchData, 5000);
+
+    // Limpieza cuando el componente se desmonta
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   return (
     <Fragment>
       {/* // <div className="bg-white p-4 rounded-sm border border-solid border-gray-200 flex flex-col flex-1"> */}
@@ -119,9 +160,9 @@ export default function FrenquencyChart() {
         Frecuencia de uso mensual
       </strong>
       {/* <div className="mt-3 flex flex-1 text-xs "> */}
-        {/* <ResponsiveContainer> */}
-          <PlotlyChart data={data_chart} />
-        {/* </ResponsiveContainer> */}
+      {/* <ResponsiveContainer> */}
+      <PlotlyChart data={data_chart} />
+      {/* </ResponsiveContainer> */}
       {/* </div> */}
 
       {/* // </div> */}
