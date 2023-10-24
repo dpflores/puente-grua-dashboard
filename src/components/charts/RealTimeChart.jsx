@@ -5,6 +5,7 @@ import StockChart from "./highcharts/Stock";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { ResponsiveContainer } from "recharts";
+import { useState, useEffect } from "react";
 
 // Load Highcharts modules
 require("highcharts/indicators/indicators")(Highcharts);
@@ -97,142 +98,174 @@ var array2 = [
 var array3 = [];
 var array4 = [];
 
-const stockOptions = {
-  series: [
-    {
-      name: "Grúa 1",
-      color: "#66CC00",
-      // showCheckbox: true,
-      data: array1,
-      // data: [],
+export default function RealTimeChart() {
+  const [data1, setData1] = useState([array1]);
+  const [data2, setData2] = useState(array2);
 
-      tooltip: {
-        pointFormat:
-          '<span style="color:{point.color}">\u25CF</span> ' +
-          "{series.name}: <b>{point.y}m</b><br/>",
-      },
-    },
-    {
-      name: "Grúa 2",
-      color: "#FF9933",
-      // showCheckbox: true,
-      data: array2,
-      // data: [],
+  useEffect(() => {
+    const fetchData = () => {
+      fetch("http://localhost:1880/realtime")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setData1(data.array1);
+          setData2(data.array2);
+          // setPosts(data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
+    // Ejecutar fetchData inicialmente
+    fetchData();
 
-      tooltip: {
-        pointFormat:
-          '<span style="color:{point.color}">\u25CF</span> ' +
-          "{series.name}: <b>{point.y}m</b><br/>",
-      },
-    },
-  ],
-  chart: {
-    events: {
-      load: function () {
-        // set up the updating of the chart each second
-        var series1 = this.series[0];
-        var series2 = this.series[1];
+    // Configurar un intervalo para ejecutar fetchData cada 500 milisegundos
+    const intervalId = setInterval(fetchData, 1000);
 
-        setInterval(function () {
-          if (!!series1.data) {
-            var x = new Date().getTime(), // current time
-              y = Math.round(Math.random() * 100);
-            series1.addPoint([x, y]);
-          }
-        }, 1000);
+    // Limpieza cuando el componente se desmonta
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
-        setInterval(function () {
-          if (!!series2.data) {
-            var x = new Date().getTime(), // current time
-              y = Math.round(Math.random() * 100);
-            series2.addPoint([x, y]);
-          }
-        }, 1000);
-      },
-    },
-  },
-
-  accessibility: {
-    enabled: false,
-  },
-
-  time: {
-    useUTC: false,
-  },
-
-  yAxis: {
-    title: { text: "Altura (m)", align: "middle", rotation: 90, offset: 20 },
-
-    // title: {
-    //   text: 'm',
-    //   align: 'high',
-    //   offset: 5,
-    //   rotation: 0,
-    //   y: 0
-    // },
-  },
-
-  // ADDED
-  legend: {
-    enabled: "true",
-    // layout: 'vertical',
-    // align: 'right',
-    // verticalAlign: 'middle',
-  },
-
-  plotOptions: {
-    series: {
-      // compare: 'percent',
-      showInNavigator: true,
-    },
-  },
-
-  // END ADDED
-
-  rangeSelector: {
-    buttons: [
+  const stockOptions = {
+    series: [
       {
-        count: 1440,
-        type: "minute",
-        text: "día",
+        animation: false,
+        name: "Grúa 1",
+        color: "#66CC00",
+        // showCheckbox: true,
+        data: data1,
+        // data: [],
+
+        tooltip: {
+          pointFormat:
+            '<span style="color:{point.color}">\u25CF</span> ' +
+            "{series.name}: <b>{point.y}m</b><br/>",
+        },
       },
       {
-        count: 1,
-        type: "month",
-        text: "mes",
-      },
-      {
-        count: 12,
-        type: "month",
-        text: "año",
-      },
-      {
-        type: "all",
-        text: "Todo",
+        animation: false,
+        name: "Grúa 2",
+        color: "#FF9933",
+        // showCheckbox: true,
+        data: data2,
+        // data: [],
+
+        tooltip: {
+          animation: false,
+          pointFormat:
+            '<span style="color:{point.color}">\u25CF</span> ' +
+            "{series.name}: <b>{point.y}m</b><br/>",
+        },
       },
     ],
-    inputEnabled: true,
-    selected: 1,
-  },
+    chart: {
+      animation: false,
+      // events: {
+      //   load: function () {
+      //     // set up the updating of the chart each second
+      //     var series1 = this.series[0];
+      //     var series2 = this.series[1];
+      //     setInterval(function () {
+      //       if (!!series1.data) {
+      //         var x = new Date().getTime(), // current time
+      //           y = Math.round(Math.random() * 100);
+      //         series1.addPoint([x, y]);
+      //       }
+      //     }, 1000);
+      //     setInterval(function () {
+      //       if (!!series2.data) {
+      //         var x = new Date().getTime(), // current time
+      //           y = Math.round(Math.random() * 100);
+      //         series2.addPoint([x, y]);
+      //       }
+      //     }, 1000);
+      //   },
+      // },
+    },
 
-  title: {
-    text: "", //'DATA EN TIEMPO REAL'
-  },
+    accessibility: {
+      enabled: false,
+    },
 
-  exporting: {
-    enabled: false,
-  },
+    time: {
+      useUTC: false,
+    },
 
-  credits: {
-    enabled: false,
-  },
-  time: {
-    useUTC: false,
-    timezone: "America/Lima",
-  },
-};
+    yAxis: {
+      title: { text: "Altura (m)", align: "middle", rotation: 90, offset: 20 },
 
-export default function RealTimeChart() {
+      // title: {
+      //   text: 'm',
+      //   align: 'high',
+      //   offset: 5,
+      //   rotation: 0,
+      //   y: 0
+      // },
+    },
+
+    // ADDED
+    legend: {
+      enabled: "true",
+      // layout: 'vertical',
+      // align: 'right',
+      // verticalAlign: 'middle',
+    },
+
+    plotOptions: {
+      series: {
+        animation: false,
+        // compare: 'percent',
+        showInNavigator: true,
+      },
+    },
+
+    // END ADDED
+
+    rangeSelector: {
+      buttons: [
+        {
+          count: 1,
+          type: "day",
+          text: "Hoy",
+        },
+        {
+          count: 1,
+          type: "month",
+          text: "mes",
+        },
+        {
+          count: 12,
+          type: "month",
+          text: "año",
+        },
+        {
+          type: "all",
+          text: "Todo",
+        },
+      ],
+      inputEnabled: true,
+      // selected: 1,
+    },
+
+    title: {
+      text: "", //'DATA EN TIEMPO REAL'
+    },
+
+    exporting: {
+      enabled: false,
+    },
+
+    credits: {
+      enabled: false,
+    },
+    time: {
+      useUTC: false,
+      timezone: "America/Lima",
+    },
+  };
+  // Fin del config
   return (
     <Fragment>
       <strong className="text-gray-700 font-medium">

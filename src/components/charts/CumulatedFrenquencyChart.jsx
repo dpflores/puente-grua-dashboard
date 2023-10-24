@@ -15,6 +15,29 @@ require("highcharts/modules/map")(Highcharts);
 
 const chartOptions = {
   chart: {
+    events: {
+      load: function () {
+        // set up the updating of the chart each second
+        var series1 = this.series[0];
+        var series2 = this.series[1];
+
+        setInterval(function () {
+          if (!!series1.data) {
+            var x = new Date().getTime(), // current time
+              y = Math.round(Math.random() * 100);
+            series1.addPoint([x, y]);
+          }
+        }, 1000);
+
+        setInterval(function () {
+          if (!!series2.data) {
+            var x = new Date().getTime(), // current time
+              y = Math.round(Math.random() * 100);
+            series2.addPoint([x, y]);
+          }
+        }, 1000);
+      },
+    },
     type: "column",
     // height: (9/20 * 100) + '%'
   },
@@ -212,7 +235,7 @@ const chartOptions = {
         {
           name: "DIC",
           y: 0,
-          // drilldown: null
+          // drilldown: null13776fb44127fead2bfd4b11d315833facb92b57
         },
       ],
     },
