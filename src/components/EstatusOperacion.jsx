@@ -14,7 +14,11 @@ export default function EstatusOperacion() {
 
       <div className="flex flex-row gap-4 w-full">
         <Box>
-          <RealTimeChart />
+          <RealTimeChart
+            chartName={"Monitoreo general de condiciones"}
+            dataPath={"realtime"}
+            dataRate={1000}
+          />
         </Box>
 
         {/* <BuyerProfileChart/> */}
@@ -24,7 +28,7 @@ export default function EstatusOperacion() {
         <Box>
           <DownloadData />
         </Box>
-        
+
         {/* <RecentOrders />
         <PopularProducts /> */}
       </div>

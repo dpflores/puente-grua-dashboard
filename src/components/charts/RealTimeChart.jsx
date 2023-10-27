@@ -98,13 +98,17 @@ var array2 = [
 var array3 = [];
 var array4 = [];
 
-export default function RealTimeChart() {
-  const [data1, setData1] = useState([array1]);
+export default function RealTimeChart({
+  chartName,
+  dataPath,
+  dataRate = 10000,
+}) {
+  const [data1, setData1] = useState(array1);
   const [data2, setData2] = useState(array2);
 
   useEffect(() => {
     const fetchData = () => {
-      fetch("http://localhost:1880/realtime")
+      fetch(`http://localhost:1880/${dataPath}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -119,8 +123,8 @@ export default function RealTimeChart() {
     // Ejecutar fetchData inicialmente
     fetchData();
 
-    // Configurar un intervalo para ejecutar fetchData cada 500 milisegundos
-    const intervalId = setInterval(fetchData, 1000);
+    // Configurar un intervalo para ejecutar fetchData
+    const intervalId = setInterval(fetchData, dataRate);
 
     // Limpieza cuando el componente se desmonta
     return () => {
@@ -139,6 +143,7 @@ export default function RealTimeChart() {
         // data: [],
 
         tooltip: {
+          valueDecimals: 2,
           pointFormat:
             '<span style="color:{point.color}">\u25CF</span> ' +
             "{series.name}: <b>{point.y}m</b><br/>",
@@ -153,6 +158,7 @@ export default function RealTimeChart() {
         // data: [],
 
         tooltip: {
+          valueDecimals: 2,
           animation: false,
           pointFormat:
             '<span style="color:{point.color}">\u25CF</span> ' +
@@ -268,9 +274,7 @@ export default function RealTimeChart() {
   // Fin del config
   return (
     <Fragment>
-      <strong className="text-gray-700 font-medium">
-        Monitoreo general de condiciones
-      </strong>
+      <strong className="text-gray-700 font-medium">{chartName}</strong>
       <div className="h-full w-full mt-3 flex flex-1 text-xs ">
         <ResponsiveContainer>
           <StockChart options={stockOptions} highcharts={Highcharts} />

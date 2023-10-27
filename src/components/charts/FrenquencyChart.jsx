@@ -159,11 +159,9 @@ export default function FrenquencyChart() {
       <strong className="text-gray-700 font-medium">
         Frecuencia de uso mensual
       </strong>
-      {/* <div className="mt-3 flex flex-1 text-xs "> */}
-      {/* <ResponsiveContainer> */}
-      <PlotlyChart data={data_chart} />
-      {/* </ResponsiveContainer> */}
-      {/* </div> */}
+      <div className="overflow:hidden w-full h-full ">
+        <PlotlyChart data={data_chart} />
+      </div>
 
       {/* // </div> */}
     </Fragment>
@@ -199,7 +197,7 @@ function PlotlyChart({ data }) {
 
         //hoverlabel: { bgcolor: "#FFF" }
       }}
-      config={{ responsive: true }}
+      config={{ responsive: false }}
       // config={{ responsive: true, displayModeBar: false }}
     />
   );

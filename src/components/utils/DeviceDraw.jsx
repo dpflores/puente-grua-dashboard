@@ -1,21 +1,19 @@
+import { chart } from "highcharts";
 import React, { Fragment } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-export default function DeviceDraw() {
+export default function DeviceDraw({ chartName, dataPath, dataRate = 10000 }) {
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
-      <strong className="text-gray-700 font-medium">
-        {" "}
-        Movimiento del sistema
-      </strong>
+      <strong className="text-gray-700 font-medium"> {chartName}</strong>
       <div className="mt-3 relative w-full flex h-[31rem] bg-sky-200">
-        <Draw />
+        <Draw dataPath={dataPath} dataRate={dataRate} />
       </div>
     </div>
   );
 }
 
-function Draw() {
+function Draw({ dataPath, dataRate = 10000 }) {
   const [x_pos, setXPos] = useState(0);
   const [y_pos, setYPos] = useState(0);
 
@@ -39,7 +37,7 @@ function Draw() {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch("http://localhost:1880/status-draw")
+      fetch(`http://localhost:1880/${dataPath}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -57,7 +55,7 @@ function Draw() {
     fetchData();
 
     // Configurar un intervalo para ejecutar fetchData cada 500 milisegundos
-    const intervalId = setInterval(fetchData, 200);
+    const intervalId = setInterval(fetchData, dataRate);
 
     // Limpieza cuando el componente se desmonta
     return () => {

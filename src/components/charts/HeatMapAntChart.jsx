@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import DatePickerComponent from "./components/DatePicker";
 import RefreshButton from "./components/RefreshButton";
+import layoutImage from "../images/layout.jpg";
+
 const DemoHeatmap = () => {
   const [data, setData] = useState([]);
 
@@ -67,7 +69,7 @@ const DemoHeatmap = () => {
         type: "image",
         start: ["min", "max"],
         end: ["max", "min"],
-        src: "https://gw.alipayobjects.com/zos/rmsportal/NeUTMwKtPcPxIFNTWZOZ.png",
+        src: layoutImage,
       },
     ],
   };

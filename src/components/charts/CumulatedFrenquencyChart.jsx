@@ -5,6 +5,7 @@ import Chart from "./highcharts/Chart";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { ResponsiveContainer } from "recharts";
+import { useState, useEffect } from "react";
 
 // Load Highcharts modules
 require("highcharts/indicators/indicators")(Highcharts);
@@ -13,235 +14,169 @@ require("highcharts/indicators/macd")(Highcharts);
 require("highcharts/modules/exporting")(Highcharts);
 require("highcharts/modules/map")(Highcharts);
 
-const chartOptions = {
-  chart: {
-    events: {
-      load: function () {
-        // set up the updating of the chart each second
-        var series1 = this.series[0];
-        var series2 = this.series[1];
+const array1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+const array2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-        setInterval(function () {
-          if (!!series1.data) {
-            var x = new Date().getTime(), // current time
-              y = Math.round(Math.random() * 100);
-            series1.addPoint([x, y]);
-          }
-        }, 1000);
+export default function CumulatedFrequencyChart() {
+  const [data1, setData1] = useState(array1);
+  const [data2, setData2] = useState(array2);
 
-        setInterval(function () {
-          if (!!series2.data) {
-            var x = new Date().getTime(), // current time
-              y = Math.round(Math.random() * 100);
-            series2.addPoint([x, y]);
-          }
-        }, 1000);
+  useEffect(() => {
+    const fetchData = () => {
+      fetch("http://localhost:1880/cumulatedfrequency")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setData1(data.array1);
+          setData2(data.array2);
+          // setPosts(data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
+    // Ejecutar fetchData inicialmente
+    fetchData();
+
+    // Configurar un intervalo para ejecutar fetchData cada 500 milisegundos
+    const intervalId = setInterval(fetchData, 5000);
+
+    // Limpieza cuando el componente se desmonta
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  const chartOptions = {
+    chart: {
+      animation: false,
+      // events: {
+      //   load: function () {
+      //     // set up the updating of the chart each second
+      //     var series1 = this.series[0];
+      //     var series2 = this.series[1];
+
+      //     setInterval(function () {
+      //       if (!!series1.data) {
+      //         var x = new Date().getTime(), // current time
+      //           y = Math.round(Math.random() * 100);
+      //         series1.addPoint([x, y]);
+      //       }
+      //     }, 1000);
+
+      //     setInterval(function () {
+      //       if (!!series2.data) {
+      //         var x = new Date().getTime(), // current time
+      //           y = Math.round(Math.random() * 100);
+      //         series2.addPoint([x, y]);
+      //       }
+      //     }, 1000);
+      //   },
+      // },
+      type: "column",
+      // height: (9/20 * 100) + '%'
+    },
+
+    title: {
+      align: "center",
+      text: " ",
+    },
+    // subtitle: {
+    //     align: 'left',
+    //     text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+    // },
+    accessibility: {
+      announceNewData: {
+        enabled: true,
       },
     },
-    type: "column",
-    // height: (9/20 * 100) + '%'
-  },
-
-  title: {
-    align: "center",
-    text: " ",
-  },
-  // subtitle: {
-  //     align: 'left',
-  //     text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
-  // },
-  accessibility: {
-    announceNewData: {
+    xAxis: {
+      type: "category",
+    },
+    yAxis: {
+      title: {
+        text: "Porcentaje (%)",
+      },
+      // min: 0,
+      // max: 100,
+    },
+    legend: {
       enabled: true,
     },
-  },
-  xAxis: {
-    type: "category",
-  },
-  yAxis: {
-    title: {
-      text: "Porcentaje (%)",
+
+    exporting: {
+      enabled: false,
     },
-    min: 0,
-    max: 100,
-  },
-  legend: {
-    enabled: true,
-  },
 
-  exporting: {
-    enabled: false,
-  },
+    credits: {
+      enabled: false,
+    },
 
-  credits: {
-    enabled: false,
-  },
-
-  plotOptions: {
-    series: {
-      borderWidth: 0,
-      dataLabels: {
-        enabled: true,
-        format: "{point.y:.1f}%",
-      },
-      states: {
-        inactive: {
-          opacity: 1,
+    plotOptions: {
+      series: {
+        animation: false,
+        borderWidth: 0,
+        dataLabels: {
+          enabled: true,
+          format: "{point.y:.1f}%",
         },
-      },
-      events: {
-        legendItemClick: function () {
-          return false;
+        states: {
+          inactive: {
+            opacity: 1,
+          },
+        },
+        events: {
+          legendItemClick: function () {
+            return false;
+          },
         },
       },
     },
-  },
 
-  tooltip: {
-    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-    pointFormat:
-      '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b><br/>',
-  },
+    tooltip: {
+      headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+      pointFormat:
+        '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+      footerFormat: "</table>",
+      shared: true,
+      useHTML: true,
+    },
 
-  series: [
-    {
-      name: "Frecuencia de uso",
-      // colorByPoint: true,
-      color: "rgb(14,18,113)",
-      data: [
-        {
-          name: "ENE",
-          y: 0,
-          // drilldown: 'Chrome'
-        },
-        {
-          name: "FEB",
-          y: 10,
-          // drilldown: 'Safari'
-        },
-        {
-          name: "MAR",
-          y: 20,
-          // drilldown: 'Firefox'
-        },
-        {
-          name: "ABR",
-          y: 30,
-          // drilldown: 'Edge'
-        },
-        {
-          name: "MAY",
-          y: 40,
-          // drilldown: 'Opera'
-        },
-        {
-          name: "JUN",
-          y: 50,
-          // drilldown: 'Internet Explorer'
-        },
-        {
-          name: "JUL",
-          y: 60,
-          // drilldown: null
-        },
-        {
-          name: "AGO",
-          y: 70,
-          // drilldown: null
-        },
-        {
-          name: "SET",
-          y: 80,
-          // drilldown: null
-        },
-        {
-          name: "OCT",
-          y: 90,
-          // drilldown: null
-        },
-        {
-          name: "NOV",
-          y: 70,
-          // drilldown: null
-        },
-        {
-          name: "DIC",
-          y: 60,
-          // drilldown: null
-        },
+    xAxis: {
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
       ],
+      crosshair: true,
     },
 
-    {
-      name: "Frecuencia Efectiva Actual de Uso",
-      // colorByPoint: true,
-      color: "rgb(0,148,206)",
-      data: [
-        {
-          name: "ENE",
-          y: 80,
-          // drilldown: 'Chrome'
-        },
-        {
-          name: "FEB",
-          y: 70,
-          // drilldown: 'Safari'
-        },
-        {
-          name: "MAR",
-          y: 60,
-          // drilldown: 'Firefox'
-        },
-        {
-          name: "ABR",
-          y: 50,
-          // drilldown: 'Edge'
-        },
-        {
-          name: "MAY",
-          y: 40,
-          // drilldown: 'Opera'
-        },
-        {
-          name: "JUN",
-          y: 60,
-          // drilldown: 'Internet Explorer'
-        },
-        {
-          name: "JUL",
-          y: 70,
-          // drilldown: null
-        },
-        {
-          name: "AGO",
-          y: 50,
-          // drilldown: null
-        },
-        {
-          name: "SET",
-          y: 10,
-          // drilldown: null
-        },
-        {
-          name: "OCT",
-          y: 0,
-          // drilldown: null
-        },
-        {
-          name: "NOV",
-          y: 60,
-          // drilldown: null
-        },
-        {
-          name: "DIC",
-          y: 0,
-          // drilldown: null13776fb44127fead2bfd4b11d315833facb92b57
-        },
-      ],
-    },
-  ],
-};
-export default function CumulatedFrequencyChart() {
+    series: [
+      {
+        animation: false,
+        name: "Frecuencia de uso",
+        color: "rgb(14,18,113)",
+        data: data1,
+      },
+      {
+        animation: false,
+        name: "Frecuencia efectiva actual de uso ",
+        color: "rgb(0,148,206)",
+        data: data2,
+      },
+    ],
+  };
+
   return (
     <Fragment>
       <strong className="text-gray-700 font-medium">

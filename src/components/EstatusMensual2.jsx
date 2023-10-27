@@ -13,7 +13,7 @@ export default function EstatusMensual2() {
         </Box>
 
         <Box>
-          <BarChart />
+          <BarChart chartName={"Bar Chart 1"} dataPath={"barchart1"} />
         </Box>
       </div>
 
@@ -23,7 +23,7 @@ export default function EstatusMensual2() {
         </Box>
 
         <Box>
-          <BarChart />
+          <BarChart chartName={"Bar Chart 2"} dataPath={"barchart2"} />
         </Box>
       </div>
     </div>
