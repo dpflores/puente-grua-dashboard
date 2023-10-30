@@ -9,7 +9,7 @@ export default function EstatusMensual2() {
     <div className="grid grid-cols-2 w-full gap-4 p-4">
       <div className="col-span-1 flex flex-col gap-4">
         <Box>
-          <HeatMapAntChart />
+          <HeatMapAntChart chartName={"Heatmap 1"} dataPath={"heat1"} />
         </Box>
 
         <Box>
@@ -19,7 +19,7 @@ export default function EstatusMensual2() {
 
       <div className="col-span-1 flex flex-col gap-4">
         <Box>
-          <HeatMapAntChart />
+          <HeatMapAntChart chartName={"Heatmap 2"} dataPath={"heat1"} />
         </Box>
 
         <Box>

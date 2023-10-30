@@ -10,6 +10,15 @@ import DatePickerComponent from "./components/DatePicker";
 import RefreshButton from "./components/RefreshButton";
 import layoutImage from "../images/layout.jpg";
 
+
+export default function HeatMapAntChart({
+  chartName,
+  dataPath,
+  dataRate = 10000,
+}) {
+
+
+
 const DemoHeatmap = () => {
   const [data, setData] = useState([]);
 
@@ -17,14 +26,28 @@ const DemoHeatmap = () => {
     asyncFetch();
   }, []);
 
+  useEffect(() => {
+    // Llamar a asyncFetch inmediatamente al cargar el componente.
+    asyncFetch();
+    
+    // Programar llamadas a asyncFetch cada segundo.
+    const intervalId = setInterval(asyncFetch, 5000);
+
+    // Limpieza: detener el intervalo al desmontar el componente.
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [dataPath]);
+
   const asyncFetch = () => {
-    fetch("https://gw.alipayobjects.com/os/antvdemo/assets/data/heatmap.json")
+    fetch(`http://localhost:1880/${dataPath}`)
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => {
         console.log("fetch data failed", error);
       });
   };
+  
   const config = {
     data,
     //   label: {
@@ -45,7 +68,16 @@ const DemoHeatmap = () => {
     //         }
     //     },
     // },
-
+    xAxis: {
+      min: 0,
+      max: 500,
+    },
+    yAxis: {
+      min: 0,
+      max: 500,
+    },
+    
+    
     type: "density",
     xField: "g",
     yField: "l",
@@ -66,6 +98,7 @@ const DemoHeatmap = () => {
     },
     annotations: [
       {
+        
         type: "image",
         start: ["min", "max"],
         end: ["max", "min"],
@@ -76,11 +109,9 @@ const DemoHeatmap = () => {
 
   return <Heatmap {...config} />;
 };
-
-export default function HeatMapAntChart() {
   return (
     <div>
-      <strong className="text-gray-700 font-medium">Mapa de calor</strong>
+      <strong className="text-gray-700 font-medium">{chartName}</strong>
       <div className="mt-3 flex flex-1 text-xs">
         <ResponsiveContainer>
           <DemoHeatmap />

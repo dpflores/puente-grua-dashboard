@@ -172,6 +172,8 @@ function PlotlyChart({ data }) {
   return (
     <Plot
       data={data}
+      useResizeHandler={true}
+      style={{width: "100%", height: "100%"}}
       layout={{
         //title: 'FRECUENCIA DE USO MENSUAL',
         // height: 350,  // HERE IS THE IMPORTANT
@@ -197,8 +199,8 @@ function PlotlyChart({ data }) {
 
         //hoverlabel: { bgcolor: "#FFF" }
       }}
-      config={{ responsive: false }}
-      // config={{ responsive: true, displayModeBar: false }}
+      // config={{ responsive: false }}
+      config={{ responsive: true, displayModeBar: false }}
     />
   );
 }
