@@ -19,9 +19,9 @@ export default function HeatMapAntChart({
   const DemoHeatmap = () => {
     const [data, setData] = useState([]);
 
-    useEffect(() => {
-      asyncFetch();
-    }, []);
+    // useEffect(() => {
+    //   asyncFetch();
+    // }, []);
 
     useEffect(() => {
       // Llamar a asyncFetch inmediatamente al cargar el componente.
@@ -67,11 +67,11 @@ export default function HeatMapAntChart({
       // },
       xAxis: {
         min: 0,
-        max: 500,
+        max: 75,
       },
       yAxis: {
         min: 0,
-        max: 500,
+        max: 38,
       },
 
       type: "density",
