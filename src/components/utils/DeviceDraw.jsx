@@ -2,6 +2,7 @@ import { chart } from "highcharts";
 import React, { Fragment } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { getHostPath } from "../../utils/host";
 export default function DeviceDraw({ chartName, dataPath, dataRate = 10000 }) {
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
@@ -37,7 +38,7 @@ function Draw({ dataPath, dataRate = 10000 }) {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch(`http://localhost:1880/${dataPath}`)
+      fetch(getHostPath(dataPath))
         .then((res) => res.json())
         .then((data) => {
           console.log(data);

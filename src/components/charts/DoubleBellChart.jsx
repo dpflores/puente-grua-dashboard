@@ -7,6 +7,7 @@ import { Button } from "antd";
 import RefreshButton from "./components/RefreshButton";
 import { useState } from "react";
 import { useEffect } from "react";
+import { getHostPath } from "../../utils/host";
 
 require("highcharts/modules/histogram-bellcurve")(Highcharts);
 require("highcharts/indicators/indicators")(Highcharts);
@@ -86,7 +87,7 @@ export default function BellChart({ chartName, dataPath, dataRate = 10000 }) {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch(`http://localhost:1880/${dataPath}`)
+      fetch(getHostPath(dataPath))
         .then((res) => res.json())
         .then((data) => {
           const { valoresX, valoresY } = getBellData(data);

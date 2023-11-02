@@ -7,9 +7,18 @@ import EstatusOperacion from "./components/EstatusOperacion";
 import EstatusMensual1 from "./components/EstatusMensual1";
 import EstatusMensual2 from "./components/EstatusMensual2";
 import LoginView from "./components/Login";
+import { useEffect, useState } from "react";
+import { getHostPath, setHost } from "./utils/host";
 
 function App() {
-  return (
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const base = window.location.hostname.split("http://");
+    setHost(base[base.length - 1].split(":")[0], 4000);
+    setLoaded(true);
+  }, []);
+
+  return loaded ? (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -22,6 +31,8 @@ function App() {
         <Route path="login" element={<LoginView />} />
       </Routes>
     </Router>
+  ) : (
+    <p>Cargando...</p>
   );
 }
 

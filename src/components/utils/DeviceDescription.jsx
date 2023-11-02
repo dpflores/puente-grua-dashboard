@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { getHostPath } from "../../utils/host";
 
 export default function Description({ chartName, dataPath, dataRate = 10000 }) {
   const [status, setStatus] = useState(false);
 
   useEffect(() => {
     const fetchData = () => {
-      fetch(`http://localhost:1880/${dataPath}`)
+      fetch(getHostPath(dataPath))
         .then((res) => res.json())
         .then((data) => {
           setStatus(data.status);
@@ -70,7 +71,7 @@ export function Hourmeter({ dataPath, dataRate = 1000 }) {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch(`http://localhost:1880/${dataPath}`)
+      fetch(getHostPath(dataPath))
         .then((res) => res.json())
         .then((data) => {
           setMinutes(data.minutes);

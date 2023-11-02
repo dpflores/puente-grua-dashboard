@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import DatePickerComponent from "./components/DatePicker";
 import RefreshButton from "./components/RefreshButton";
 import layoutImage from "../images/layout.jpg";
+import { getHostPath } from "../../utils/host";
 
 export default function HeatMapAntChart({
   chartName,
@@ -36,7 +37,7 @@ export default function HeatMapAntChart({
     }, [dataPath]);
 
     const asyncFetch = () => {
-      fetch(`http://localhost:1880/${dataPath}`)
+      fetch(getHostPath(dataPath))
         .then((response) => response.json())
         .then((json) => setData(json))
         .catch((error) => {

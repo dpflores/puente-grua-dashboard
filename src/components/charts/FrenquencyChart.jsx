@@ -4,6 +4,7 @@ import { useState } from "react";
 import { chart } from "highcharts";
 import { ResponsiveContainer } from "recharts";
 import { useEffect } from "react";
+import { getHostPath } from "../../utils/host";
 
 var nombresMeses = [
   "Enero",
@@ -115,7 +116,7 @@ export default function FrenquencyChart({ dataPath, chartName, dataRate }) {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch(`http://localhost:1880/${dataPath}`)
+      fetch(getHostPath(dataPath))
         .then((res) => res.json())
         .then((data) => {
           // console.log(data);

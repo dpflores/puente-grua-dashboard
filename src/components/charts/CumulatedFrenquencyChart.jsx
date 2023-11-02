@@ -6,6 +6,7 @@ import Highcharts, { chart } from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { ResponsiveContainer } from "recharts";
 import { useState, useEffect } from "react";
+import { getHostPath } from "../../utils/host";
 
 // Load Highcharts modules
 require("highcharts/indicators/indicators")(Highcharts);
@@ -27,7 +28,7 @@ export default function CumulatedFrequencyChart({
 
   useEffect(() => {
     const fetchData = () => {
-      fetch(`http://localhost:1880/${dataPath}`)
+      fetch(getHostPath(dataPath))
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
