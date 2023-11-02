@@ -16,7 +16,7 @@ export default function EstatusSistema() {
           <DeviceDescription
             chartName={"Descripción del sistema"}
             dataPath={"status-desc"}
-            dataRate={1000}
+            dataRate={5000}
           />
         </Box>
 

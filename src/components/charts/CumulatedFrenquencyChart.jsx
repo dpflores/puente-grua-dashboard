@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 
 import Chart from "./highcharts/Chart";
 // import Highcharts from 'highcharts'
-import Highcharts from "highcharts/highstock";
+import Highcharts, { chart } from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { ResponsiveContainer } from "recharts";
 import { useState, useEffect } from "react";
@@ -17,13 +17,17 @@ require("highcharts/modules/map")(Highcharts);
 const array1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 const array2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-export default function CumulatedFrequencyChart() {
+export default function CumulatedFrequencyChart({
+  chartName,
+  dataPath,
+  dataRate,
+}) {
   const [data1, setData1] = useState(array1);
   const [data2, setData2] = useState(array2);
 
   useEffect(() => {
     const fetchData = () => {
-      fetch("http://localhost:1880/cumulatedfrequency")
+      fetch(`http://localhost:1880/${dataPath}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -38,8 +42,8 @@ export default function CumulatedFrequencyChart() {
     // Ejecutar fetchData inicialmente
     fetchData();
 
-    // Configurar un intervalo para ejecutar fetchData cada 500 milisegundos
-    const intervalId = setInterval(fetchData, 5000);
+    // Configurar un intervalo para ejecutar fetchData
+    const intervalId = setInterval(fetchData, dataRate);
 
     // Limpieza cuando el componente se desmonta
     return () => {
@@ -179,9 +183,7 @@ export default function CumulatedFrequencyChart() {
 
   return (
     <Fragment>
-      <strong className="text-gray-700 font-medium">
-        Frecuencia de uso mensual acumulado
-      </strong>
+      <strong className="text-gray-700 font-medium">{chartName}</strong>
       <div className=" mt-3 flex flex-1 text-xs ">
         <ResponsiveContainer>
           <Chart options={chartOptions} highcharts={Highcharts} />

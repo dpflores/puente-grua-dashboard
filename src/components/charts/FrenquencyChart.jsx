@@ -81,7 +81,7 @@ function convertISOToReadableDateTime(isoDate) {
 
 //Initialize chart
 const fecha = new Date();
-const mesActual = 10; //fecha.getMonth() + 1;
+const mesActual = 9; //fecha.getMonth() + 1;
 var mes_init = nombresMeses[mesActual];
 //traceInitM = generateTrace(0.0001, mes_init, '000/00/00 00:00', '0000/00/00 00:00', 'Mantenimiento',true)//'2022/11/24 10:50:16'
 var traceInitUE = generateTrace(
@@ -110,12 +110,12 @@ var traceInitUC = generateTrace(
 );
 var data_init = [traceInitUE, traceInitUC, traceInitNU]; //,traceInitM];
 
-export default function FrenquencyChart() {
+export default function FrenquencyChart({ dataPath, chartName, dataRate }) {
   const [data_chart, setData] = useState(data_init);
 
   useEffect(() => {
     const fetchData = () => {
-      fetch("http://localhost:1880/frequency")
+      fetch(`http://localhost:1880/${dataPath}`)
         .then((res) => res.json())
         .then((data) => {
           // console.log(data);
@@ -145,7 +145,7 @@ export default function FrenquencyChart() {
     fetchData();
 
     // Configurar un intervalo para ejecutar fetchData cada 500 milisegundos
-    const intervalId = setInterval(fetchData, 5000);
+    const intervalId = setInterval(fetchData, dataRate);
 
     // Limpieza cuando el componente se desmonta
     return () => {
@@ -156,9 +156,7 @@ export default function FrenquencyChart() {
   return (
     <Fragment>
       {/* // <div className="bg-white p-4 rounded-sm border border-solid border-gray-200 flex flex-col flex-1"> */}
-      <strong className="text-gray-700 font-medium">
-        Frecuencia de uso mensual
-      </strong>
+      <strong className="text-gray-700 font-medium">{chartName}</strong>
       <div className="overflow:hidden w-full h-full ">
         <PlotlyChart data={data_chart} />
       </div>
@@ -173,7 +171,7 @@ function PlotlyChart({ data }) {
     <Plot
       data={data}
       useResizeHandler={true}
-      style={{width: "100%", height: "100%"}}
+      style={{ width: "100%", height: "100%" }}
       layout={{
         //title: 'FRECUENCIA DE USO MENSUAL',
         // height: 350,  // HERE IS THE IMPORTANT

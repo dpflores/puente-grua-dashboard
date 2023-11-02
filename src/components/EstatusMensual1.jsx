@@ -9,21 +9,37 @@ export default function EstatusMensual1() {
     <div className="grid grid-cols-2 w-full gap-4 p-4">
       <div className="col-span-1 flex flex-col gap-4">
         <Box>
-          <FrenquencyChart />
+          <FrenquencyChart
+            dataPath={"frequency"}
+            chartName={"Frecuencia de uso mensual"}
+            dataRate={5000}
+          />
         </Box>
 
         <Box>
-          <DoubleBellChart dataPath={"bell1"} chartName={"Gauss Chart 1"} />
+          <DoubleBellChart
+            dataPath={"bell1"}
+            chartName={"Gauss Chart 1"}
+            dataRate={60000}
+          />
         </Box>
       </div>
 
       <div className="col-span-1 flex flex-col gap-4">
         <Box>
-          <CumulatedFrenquencyChart />
+          <CumulatedFrenquencyChart
+            dataPath={"cumulatedfrequency"}
+            chartName={"Frecuencia de usoawwa acumulada"}
+            dataRate={60000}
+          />
         </Box>
 
         <Box>
-          <DoubleBellChart dataPath={"bell2"} chartName={"Gauss Chart 2"} />
+          <DoubleBellChart
+            dataPath={"bell2"}
+            chartName={"Gauss Chart 2"}
+            dataRate={60000}
+          />
         </Box>
       </div>
     </div>

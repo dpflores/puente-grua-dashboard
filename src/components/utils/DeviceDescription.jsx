@@ -56,7 +56,7 @@ export default function Description({ chartName, dataPath, dataRate = 10000 }) {
         <div className="flex flex-row my-5">
           <div className="flex flex-1 mr-10">Horómetro: </div>
           <div className="flex flex-1 text-komatsu-blue text-xl">
-            <Hourmeter dataRate={1000} dataPath={"hourmeter"} />
+            <Hourmeter dataRate={60000} dataPath={"hourmeter"} />
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@ export default function Description({ chartName, dataPath, dataRate = 10000 }) {
   );
 }
 
-export function Hourmeter({ dataPath, dataRate = 60000 }) {
+export function Hourmeter({ dataPath, dataRate = 1000 }) {
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
 
