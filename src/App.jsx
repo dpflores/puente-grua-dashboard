@@ -14,8 +14,8 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     const base = "http://" + window.location.hostname;
-    setHost(base.split(":")[0], 1880);
-    console.log(getHostPath());
+    setHost(base, 1880);
+    console.log(getHostPath(""));
     setLoaded(true);
   }, []);
 
