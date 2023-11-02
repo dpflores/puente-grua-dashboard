@@ -13,8 +13,9 @@ import { getHostPath, setHost } from "./utils/host";
 function App() {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    const base = window.location.hostname.split("http://");
-    setHost(base[base.length - 1].split(":")[0], 4000);
+    const base = "http://" + window.location.hostname;
+    setHost(base.split(":")[0], 1880);
+    console.log(getHostPath());
     setLoaded(true);
   }, []);
 
