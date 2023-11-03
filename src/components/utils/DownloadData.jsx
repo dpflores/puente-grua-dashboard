@@ -1,9 +1,15 @@
 import React, { Fragment } from "react";
 import DatePickerComponent from "../charts/components/DatePicker";
-import { Button } from "antd";
 import DownloadButton from "../charts/components/DownloadButton";
+import { useState } from "react";
 
-export default function DownloadData() {
+export default function DownloadData({ dataPath }) {
+  const [dates, setDates] = useState([]);
+  const onRangeChange = (date_values, dateStrings) => {
+    console.log(date_values);
+    setDates(date_values.map((item) => Math.round(item.valueOf() / 1000)));
+    console.log(dates);
+  };
   return (
     <Fragment>
       <div className="flex flex-row justify-between">
@@ -12,10 +18,10 @@ export default function DownloadData() {
 
       <div className="flex flex-row justify-center gap-4">
         <div>
-          <DatePickerComponent />
+          <DatePickerComponent onRangeChange={onRangeChange} />
         </div>
 
-        <DownloadButton />
+        <DownloadButton dateRange={dates} dataPath={dataPath} />
 
         {/* <RefreshButton /> */}
       </div>

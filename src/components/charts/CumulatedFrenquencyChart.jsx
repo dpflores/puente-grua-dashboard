@@ -3,7 +3,6 @@ import React, { Fragment } from "react";
 import Chart from "./highcharts/Chart";
 // import Highcharts from 'highcharts'
 import Highcharts, { chart } from "highcharts/highstock";
-import HighchartsReact from "highcharts-react-official";
 import { ResponsiveContainer } from "recharts";
 import { useState, useEffect } from "react";
 import { getHostPath } from "../../utils/host";

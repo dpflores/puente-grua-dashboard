@@ -1,8 +1,6 @@
 import React, { Fragment } from "react";
 import Plot from "react-plotly.js";
 import { useState } from "react";
-import { chart } from "highcharts";
-import { ResponsiveContainer } from "recharts";
 import { useEffect } from "react";
 import { getHostPath } from "../../utils/host";
 
@@ -81,7 +79,7 @@ function convertISOToReadableDateTime(isoDate) {
 }
 
 //Initialize chart
-const fecha = new Date();
+// const fecha = new Date();
 const mesActual = 9; //fecha.getMonth() + 1;
 var mes_init = nombresMeses[mesActual];
 //traceInitM = generateTrace(0.0001, mes_init, '000/00/00 00:00', '0000/00/00 00:00', 'Mantenimiento',true)//'2022/11/24 10:50:16'

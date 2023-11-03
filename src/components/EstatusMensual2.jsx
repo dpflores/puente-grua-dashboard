@@ -1,5 +1,4 @@
 import React from "react";
-import HeatMapChart from "./charts/HeatMapChart";
 import BarChart from "./charts/BarChart";
 import HeatMapAntChart from "./charts/HeatMapAntChart";
 import Box from "./shared/Box";

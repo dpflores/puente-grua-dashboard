@@ -1,6 +1,5 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { ResponsiveContainer } from "recharts";
-import heatImg from "../images/backstretch.jpg";
 
 import { Heatmap } from "@ant-design/plots";
 
@@ -26,14 +25,6 @@ export default function HeatMapAntChart({
     useEffect(() => {
       // Llamar a asyncFetch inmediatamente al cargar el componente.
       asyncFetch();
-
-      // Programar llamadas a asyncFetch cada segundo.
-      const intervalId = setInterval(asyncFetch, dataRate);
-
-      // Limpieza: detener el intervalo al desmontar el componente.
-      return () => {
-        clearInterval(intervalId);
-      };
     }, [dataPath]);
 
     const asyncFetch = () => {
@@ -78,8 +69,10 @@ export default function HeatMapAntChart({
       xField: "g",
       yField: "l",
       colorField: "tmp",
+      // color:
+      //   "#F51D27-#FA541C-#FF8C12-#FFC838-#FAFFA8-#80FF73-#12CCCC-#1890FF-#6E32C2",
       color:
-        "#F51D27-#FA541C-#FF8C12-#FFC838-#FAFFA8-#80FF73-#12CCCC-#1890FF-#6E32C2",
+        "#6E32C2-#1890FF-#12CCCC-#80FF73  -#FAFFA8-#FFC838-#FF8C12-#FA541C-#F51D27",
       legend: {
         // label: {
         //     style : {

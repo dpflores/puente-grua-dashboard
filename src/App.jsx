@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/shared/Layout";
-import Dashboard from "./components/EstatusOperacion";
-import Products from "./components/Products";
 import EstatusSistema from "./components/EstatusSistema";
 import EstatusOperacion from "./components/EstatusOperacion";
 import EstatusMensual1 from "./components/EstatusMensual1";

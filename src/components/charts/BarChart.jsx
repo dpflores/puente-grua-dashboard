@@ -3,7 +3,6 @@ import React, { Fragment } from "react";
 import Chart from "./highcharts/Chart";
 // import Highcharts from 'highcharts'
 import Highcharts from "highcharts/highstock";
-import HighchartsReact from "highcharts-react-official";
 import { ResponsiveContainer } from "recharts";
 
 import { useState, useEffect } from "react";
@@ -89,9 +88,7 @@ export default function BarChart({ chartName, dataPath, dataRate = 10000 }) {
         enabled: true,
       },
     },
-    xAxis: {
-      type: "category",
-    },
+
     yAxis: {
       title: {
         text: "Porcentaje (%)",
@@ -143,6 +140,7 @@ export default function BarChart({ chartName, dataPath, dataRate = 10000 }) {
     },
 
     xAxis: {
+      type: "category",
       categories: [
         "Jan",
         "Feb",

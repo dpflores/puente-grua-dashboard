@@ -1,9 +1,5 @@
 import React from "react";
-import DashboardStatsGrid from "./DashboardStatsGrid";
 import RealTimeChart from "./charts/RealTimeChart";
-import BuyerProfileChart from "./BuyerProfileChart";
-import RecentOrders from "./RecentOrders";
-import PopularProducts from "./PopularProducts";
 import Box from "./shared/Box";
 import DownloadData from "./utils/DownloadData";
 
@@ -26,7 +22,7 @@ export default function EstatusOperacion() {
 
       <div className="flex flex-row gap-4 w-full">
         <Box>
-          <DownloadData />
+          <DownloadData dataPath={"download"} />
         </Box>
 
         {/* <RecentOrders />

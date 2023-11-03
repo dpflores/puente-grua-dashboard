@@ -1,7 +1,6 @@
 import React from "react";
 import FrenquencyChart from "./charts/FrenquencyChart";
 import CumulatedFrenquencyChart from "./charts/CumulatedFrenquencyChart";
-import BellChart from "./charts/BellChart";
 import Box from "./shared/Box";
 import DoubleBellChart from "./charts/DoubleBellChart";
 export default function EstatusMensual1() {

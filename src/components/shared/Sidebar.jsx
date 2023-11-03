@@ -1,5 +1,4 @@
 import React from "react";
-import { FcBarChart } from "react-icons/fc";
 import {
   DASHBOARD_SIDEBAR_BOTTOM_LINKS,
   DASHBOARD_SIDEBAR_LINKS,

@@ -1,9 +1,4 @@
 import React from "react";
-import DashboardStatsGrid from "./DashboardStatsGrid";
-import RealTimeChart from "./charts/RealTimeChart";
-import RecentOrders from "./RecentOrders";
-import PopularProducts from "./PopularProducts";
-
 import DeviceDescription from "./utils/DeviceDescription";
 import DeviceDraw from "./utils/DeviceDraw";
 import Box from "./shared/Box";

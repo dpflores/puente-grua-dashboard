@@ -3,7 +3,6 @@ import Bell from "./highcharts/Bell";
 import Highcharts from "highcharts/highstock";
 import { ResponsiveContainer } from "recharts";
 import DatePickerComponent from "./components/DatePicker";
-import { Button } from "antd";
 import RefreshButton from "./components/RefreshButton";
 import { useState } from "react";
 import { useEffect } from "react";

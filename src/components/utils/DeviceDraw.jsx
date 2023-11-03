@@ -112,22 +112,22 @@ function Draw({ dataPath, dataRate = 10000 }) {
       />
 
       <div style={{ top: "105%", position: "absolute" }}>
-        <input
+        {/* <input
           type="range"
           min="0"
           max="75" // Puedes ajustar el rango máximo según tus necesidades
           value={x_pos}
           onChange={handleXPositionChange}
           style={{ width: "100%" }}
-        />
-        <input
+        /> */}
+        {/* <input
           type="range"
           min="0"
           max="38" // Puedes ajustar el rango máximo según tus necesidades
           value={y_pos}
           onChange={handleYPositionChange}
           style={{ width: "100%" }}
-        />
+        /> */}
       </div>
     </Fragment>
   );
