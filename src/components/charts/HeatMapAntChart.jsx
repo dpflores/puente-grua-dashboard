@@ -15,26 +15,58 @@ export default function HeatMapAntChart({
   dataPath,
   dataRate = 10000,
 }) {
+  const [data, setData] = useState([]);
+  const [dateRange, setDates] = useState([]);
+
+  // INIT CHART
+  // useEffect(() => {
+  //   // Llamar a asyncFetch inmediatamente al cargar el componente.
+  //   asyncFetch();
+  // }, [dataPath]);
+
+
+  const onRangeChange = (date_values, dateStrings) => {
+    console.log(date_values);
+    setDates(date_values.map((item) => Math.round(item.valueOf() / 1000)));
+    console.log(dateRange);
+  };
+  
+  const onClickFunction = () => {
+    console.log(dateRange);
+    asyncFetch();
+  };
+
+  
+
+  const asyncFetch = () => {
+    fetch(getHostPath(dataPath), {
+      method: "POST",
+      body: JSON.stringify({ dateRange }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        setData(data);
+
+        // setPosts(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
   const DemoHeatmap = () => {
-    const [data, setData] = useState([]);
+    
 
     // useEffect(() => {
     //   asyncFetch();
     // }, []);
 
-    useEffect(() => {
-      // Llamar a asyncFetch inmediatamente al cargar el componente.
-      asyncFetch();
-    }, [dataPath]);
-
-    const asyncFetch = () => {
-      fetch(getHostPath(dataPath))
-        .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => {
-          console.log("fetch data failed", error);
-        });
-    };
+    
 
     const config = {
       data,
@@ -108,10 +140,10 @@ export default function HeatMapAntChart({
 
       <div className="flex flex-row justify-center gap-4">
         <div>
-          <DatePickerComponent />
+          <DatePickerComponent onRangeChange={onRangeChange}/>
         </div>
 
-        <RefreshButton />
+        <RefreshButton onClickFunction={onClickFunction}/>
       </div>
     </div>
   );
