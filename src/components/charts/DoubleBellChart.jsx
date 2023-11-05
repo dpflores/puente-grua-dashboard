@@ -84,31 +84,48 @@ export default function BellChart({ chartName, dataPath, dataRate = 10000 }) {
   const [datax, setDataX] = useState([0]);
   const [datay, setDataY] = useState([0]);
 
-  useEffect(() => {
-    const fetchData = () => {
-      fetch(getHostPath(dataPath))
-        .then((res) => res.json())
-        .then((data) => {
-          const { valoresX, valoresY } = getBellData(data);
-          setDataX(valoresX);
-          setDataY(valoresY);
-          // setPosts(data);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    };
-    // Ejecutar fetchData inicialmente
-    fetchData();
+  const [dateRange, setDates] = useState([]);
 
-    // Configurar un intervalo para ejecutar fetchData cada 500 milisegundos
-    const intervalId = setInterval(fetchData, dataRate);
+  // INIT CHART
+  // useEffect(() => {
+  //   // Llamar a asyncFetch inmediatamente al cargar el componente.
+  //   asyncFetch();
+  // }, [dataPath]);
 
-    // Limpieza cuando el componente se desmonta
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+
+  const onRangeChange = (date_values, dateStrings) => {
+    console.log(date_values);
+    setDates(date_values.map((item) => Math.round(item.valueOf() / 1000)));
+    console.log(dateRange);
+  };
+  
+  const onClickFunction = () => {
+    console.log(dateRange);
+    asyncFetch();
+  };
+
+  const asyncFetch = () => {
+    fetch(getHostPath(dataPath), {
+      method: "POST",
+      body: JSON.stringify({ dateRange }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const { valoresX, valoresY } = getBellData(data);
+        setDataX(valoresX);
+        setDataY(valoresY);
+        console.log(valoresX);
+        // setPosts(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+
 
   const ChartOptions = {
     title: {
@@ -209,10 +226,10 @@ export default function BellChart({ chartName, dataPath, dataRate = 10000 }) {
 
       <div className="flex flex-row justify-center gap-4">
         <div>
-          <DatePickerComponent />
+          <DatePickerComponent onRangeChange={onRangeChange}/>
         </div>
 
-        <RefreshButton />
+        <RefreshButton onClickFunction={onClickFunction}/>
       </div>
     </Fragment>
   );

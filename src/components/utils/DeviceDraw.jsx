@@ -95,7 +95,7 @@ function Draw({ dataPath, dataRate = 10000 }) {
       <TextBox
         value={carga1}
         units={"Tn."}
-        size={1}
+        size={0.9}
         length={8}
         height={5}
         left={15 + x_pos}
@@ -104,7 +104,7 @@ function Draw({ dataPath, dataRate = 10000 }) {
       <TextBox
         value={carga2}
         units={"Tn."}
-        size={1}
+        size={0.9}
         length={8}
         height={5}
         left={15 + x_pos}
@@ -163,7 +163,7 @@ function TextBox({ value, units, size, length, height, left, top }) {
         backgroundColor: "white", // Fondo blanco
         border: "0.1em solid black", // Borde de 1 píxel de ancho, color negro
         height: `${height}%`,
-        fontSize: `2${size}`,
+        fontSize: `${size}rem`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
