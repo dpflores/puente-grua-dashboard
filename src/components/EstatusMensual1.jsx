@@ -11,7 +11,7 @@ export default function EstatusMensual1() {
           <FrenquencyChart
             dataPath={"frequency"}
             chartName={"Frecuencia de uso mensual"}
-            dataRate={5000}
+            dataRate={60000}
           />
         </Box>
 
