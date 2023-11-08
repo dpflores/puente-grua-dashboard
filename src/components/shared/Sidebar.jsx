@@ -7,10 +7,19 @@ import { NavLink as Link, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { HiOutlineLogout } from "react-icons/hi";
 import logoUrl from "./images/logo.bmp";
+import axios from "axios";
 const linkClasses =
   "flex items-center gap-2 font-light px-3 py-2 hover:bg-komatsu-blue-light no-underline hover:no-underline active:bg-komatsu-blue-light rounded-sm text-base text-decoration-none";
 
 export default function Sidebar() {
+  const handleLogout = () => {
+    axios
+      .get("http://localhost:8081/logout")
+      .then((res) => {
+        window.location.reload(true);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="bg-komatsu-blue w-60 p-3 flex flex-col text-white">
       <div className="flex items-center gap-2 px-1 py-3 w-full overflow-hidden">
@@ -29,6 +38,7 @@ export default function Sidebar() {
 
         <Link
           to={"/login"}
+          onClick={handleLogout}
           className={classNames("text-red-500 cursor-pointer", linkClasses)}
         >
           <span className="text-xl">

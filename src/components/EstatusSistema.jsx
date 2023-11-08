@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DeviceDescription from "./utils/DeviceDescription";
 import DeviceDraw from "./utils/DeviceDraw";
 import Box from "./shared/Box";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function EstatusSistema() {
   return (

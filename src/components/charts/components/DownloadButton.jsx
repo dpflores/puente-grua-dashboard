@@ -44,6 +44,7 @@ export default function DownloadButton({ dataPath, dateRange }) {
 
   const onClickFunction = () => {
     console.log(dateRange);
+    alert("Descargando datos...");
     fetchData();
   };
 
